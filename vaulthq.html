@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VaultHQ — Golden</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+
+:root {
+  --amber: #F4A623;
+  --amber-dim: #C47D0E;
+  --amber-deep: #8A5600;
+  --bg: #030200;
+  /* Vault: cyan / teal */
+  --s1: #2DD4BF;
+  --s2: #0F9B87;
+  --s3: #065C52;
+  --s-border: #0A4A42;
+  --s-bg: #01100E;
+  --s-glow: rgba(45,212,191,0.08);
+}
+
+body {
+  background: var(--bg);
+  font-family: "Cormorant Garamond", serif;
+  margin: 0; padding: 0;
+  min-height: 100vh;
+  color: #fffbf0;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 40px;
+  background: linear-gradient(180deg, rgba(3,2,0,0.95) 0%, transparent 100%);
+  border-bottom: 0.5px solid rgba(138,86,0,0.2);
+}
+.nav-brand {
+  display: flex; align-items: center; gap: 14px;
+}
+.nav-logo-golden {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 300;
+  font-size: 15px;
+  letter-spacing: .2em;
+  background: linear-gradient(170deg,#FFFBF0,#F9E07F,#F4A623,#C47D0E);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.nav-sep { width: 0.5px; height: 18px; background: rgba(138,86,0,0.4); }
+.nav-logo-spark {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: .15em;
+  background: linear-gradient(160deg, #5EEADC, var(--s1), var(--s2));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.nav-links {
+  display: flex; gap: 20px; list-style: none;
+}
+.nav-links a {
+  font-family: "DM Mono", monospace;
+  font-size: 9px; letter-spacing: .35em; text-transform: uppercase;
+  color: var(--amber-deep); text-decoration: none;
+  transition: color .2s;
+}
+.nav-links a:hover { color: var(--amber); }
+.nav-add {
+  display: flex; align-items: center; gap: 8px;
+  border: 0.5px solid var(--s-border);
+  background: var(--s-bg);
+  padding: 8px 20px; border-radius: 2px;
+  cursor: pointer; transition: border-color .2s, background .2s;
+}
+.nav-add:hover { border-color: var(--s2); background: rgba(45,212,191,0.08); }
+.nav-add span {
+  font-family: "DM Mono", monospace;
+  font-size: 9px; letter-spacing: .3em; text-transform: uppercase;
+  background: linear-gradient(160deg, #5EEADC, var(--s1));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.nav-add-dot { width: 4px; height: 4px; background: var(--s1); transform: rotate(45deg); }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 120px 40px 80px;
+  position: relative; overflow: hidden;
+  gap: 48px;
+}
+/* ambient glow */
+.hero::before {
+  content: "";
+  position: absolute; width: 70vw; height: 70vw;
+  border-radius: 50%;
+  top: 50%; left: 50%; transform: translate(-50%, -50%);
+  background: radial-gradient(circle, var(--s1), transparent);
+  opacity: .04; pointer-events: none;
+}
+.hero::after {
+  content: "";
+  position: absolute; width: 40vw; height: 40vw;
+  border-radius: 50%;
+  top: 30%; left: 60%;
+  background: radial-gradient(circle, var(--amber), transparent);
+  opacity: .03; pointer-events: none;
+}
+
+.hero-eyebrow {
+  font-family: "DM Mono", monospace;
+  font-size: 9px; letter-spacing: .5em; text-transform: uppercase;
+  color: var(--amber-deep); opacity: .5;
+  position: absolute; top: 100px;
+}
+
+.hero-wordmark {
+  display: flex; flex-direction: column;
+  align-items: center; gap: 18px; z-index: 1;
+}
+.orn { display: flex; align-items: center; gap: 14px; }
+.ol  { width: 56px; height: .5px; background: var(--amber-deep); }
+.og  { width: 7px; height: 7px; background: var(--amber); transform: rotate(45deg); }
+
+.hero-title {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 300; font-size: 80px; line-height: 1;
+  letter-spacing: .12em;
+  background: linear-gradient(160deg, #B2F5EE, var(--s1), var(--s2), var(--s3));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.hero-hq {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 600; font-size: 80px; line-height: 1;
+  letter-spacing: .08em;
+  background: linear-gradient(160deg, #FFFBF0, #F9E07F, var(--amber));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.hero-title-row { display: flex; align-items: baseline; gap: 10px; }
+.hero-divider { width: 1px; height: 52px; background: linear-gradient(180deg, transparent, var(--s-border), transparent); }
+
+.hero-sub {
+  font-family: "DM Mono", monospace; font-weight: 300;
+  font-size: 10px; letter-spacing: .45em; text-transform: uppercase;
+  color: #A8B4B8; margin-right: -.45em;
+}
+.hero-desc {
+  font-size: 18px; font-weight: 300; font-style: italic;
+  color: rgba(255,251,240,.35);
+  letter-spacing: .04em; max-width: 360px; text-align: center;
+  line-height: 1.6;
+}
+
+/* ── STATS BAR ── */
+.stats {
+  display: flex; gap: 0; z-index: 1;
+  border: 0.5px solid rgba(138,86,0,0.2);
+  border-radius: 3px; overflow: hidden;
+}
+.stat {
+  padding: 14px 32px;
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  border-right: 0.5px solid rgba(138,86,0,0.2);
+  background: rgba(3,2,0,0.6);
+}
+.stat:last-child { border-right: none; }
+.stat-n {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 300; font-size: 28px;
+  background: linear-gradient(160deg, #5EEADC, var(--s1));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.stat-l {
+  font-family: "DM Mono", monospace;
+  font-size: 8px; letter-spacing: .3em; text-transform: uppercase;
+  color: var(--amber-deep); opacity: .5;
+}
+
+/* ── IDEA GRID ── */
+.section {
+  padding: 0 40px 80px;
+  max-width: 1100px; margin: 0 auto; width: 100%;
+}
+.section-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 32px; padding-bottom: 16px;
+  border-bottom: 0.5px solid rgba(138,86,0,0.15);
+}
+.section-label {
+  display: flex; align-items: center; gap: 12px;
+}
+.section-label .ol { width: 24px; }
+.section-title {
+  font-family: "DM Mono", monospace;
+  font-size: 9px; letter-spacing: .4em; text-transform: uppercase;
+  color: var(--amber-dim); opacity: .6;
+}
+.section-count {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 13px; font-style: italic;
+  color: rgba(255,251,240,.2);
+}
+
+/* CARD GRID */
+.ideas-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+/* IDEA CARD */
+.card {
+  border: 0.5px solid var(--s-border);
+  background: var(--s-bg);
+  border-radius: 3px;
+  padding: 24px 20px 20px;
+  position: relative; overflow: hidden;
+  cursor: pointer;
+  transition: border-color .25s, transform .2s;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.card::before {
+  content: "";
+  position: absolute; width: 120px; height: 120px;
+  border-radius: 50%; top: -20px; right: -20px;
+  background: radial-gradient(circle, var(--s1), transparent);
+  opacity: .07; pointer-events: none;
+  transition: opacity .25s;
+}
+.card:hover { border-color: var(--s2); transform: translateY(-2px); }
+.card:hover::before { opacity: .12; }
+
+/* status pip */
+.card-status {
+  position: absolute; top: 16px; right: 16px;
+  display: flex; align-items: center; gap: 5px;
+}
+.pip {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--s1);
+  box-shadow: 0 0 6px var(--s1);
+}
+.pip.dim { background: var(--amber-deep); box-shadow: none; opacity: .5; }
+.pip.done { background: #34C472; box-shadow: 0 0 6px #34C472; }
+.status-label {
+  font-family: "DM Mono", monospace;
+  font-size: 7px; letter-spacing: .3em; text-transform: uppercase;
+  color: var(--s1); opacity: .6;
+}
+.status-label.dim { color: var(--amber-deep); }
+.status-label.done { color: #34C472; }
+
+/* card top ornament */
+.card-orn { display: flex; align-items: center; gap: 6px; }
+.card-orn .mo { width: 16px; height: .5px; background: var(--s-border); }
+.card-orn .mg { width: 4px; height: 4px; transform: rotate(45deg); background: var(--s2); flex-shrink: 0; }
+
+/* card content */
+.card-cat {
+  font-family: "DM Mono", monospace;
+  font-size: 7.5px; letter-spacing: .35em; text-transform: uppercase;
+  color: var(--s2); opacity: .55;
+}
+.card-name {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 600; font-size: 20px; letter-spacing: .04em;
+  background: linear-gradient(160deg, #F0FFFE, #5EEADC, var(--s1));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  line-height: 1.15;
+}
+.card-desc {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 300; font-style: italic;
+  font-size: 13.5px; color: rgba(255,251,240,.35);
+  line-height: 1.55;
+}
+.card-footer {
+  margin-top: auto;
+  display: flex; align-items: center; justify-content: space-between;
+  padding-top: 12px;
+  border-top: 0.5px solid rgba(10,74,66,0.4);
+}
+.card-date {
+  font-family: "DM Mono", monospace;
+  font-size: 7px; letter-spacing: .25em;
+  color: var(--amber-deep); opacity: .35;
+}
+.card-tags {
+  display: flex; gap: 5px;
+}
+.tag {
+  font-family: "DM Mono", monospace;
+  font-size: 7px; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--s2); opacity: .5;
+  border: 0.5px solid rgba(232,62,108,0.25);
+  padding: 2px 6px; border-radius: 2px;
+}
+
+/* featured card (wide) */
+.card.featured {
+  grid-column: span 2;
+}
+.card.featured .card-name { font-size: 26px; }
+.card.featured .card-desc { font-size: 15px; }
+
+/* spark card (tall) */
+.card.spark {
+  grid-row: span 2;
+  background: linear-gradient(160deg, rgba(1,16,14,1), rgba(10,74,66,0.15));
+}
+
+/* ── ADD IDEA MODAL (mock) ── */
+.add-panel {
+  border: 0.5px solid var(--s-border);
+  background: var(--s-bg);
+  border-radius: 3px;
+  padding: 32px;
+  margin-top: 48px;
+  position: relative; overflow: hidden;
+}
+.add-panel::before {
+  content: "";
+  position: absolute; width: 200px; height: 200px;
+  border-radius: 50%; bottom: -60px; right: -40px;
+  background: radial-gradient(circle, var(--s1), transparent);
+  opacity: .05; pointer-events: none;
+}
+.add-panel-header {
+  display: flex; align-items: center; gap: 14px; margin-bottom: 28px;
+}
+.add-panel-title {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 300; font-style: italic; font-size: 22px;
+  background: linear-gradient(160deg, #5EEADC, var(--s1));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-field {
+  display: flex; flex-direction: column; gap: 8px;
+}
+.form-field.full { grid-column: span 2; }
+.field-label {
+  font-family: "DM Mono", monospace;
+  font-size: 8px; letter-spacing: .35em; text-transform: uppercase;
+  color: var(--amber-deep); opacity: .55;
+}
+.field-input {
+  background: rgba(3,2,0,0.6);
+  border: 0.5px solid rgba(10,74,66,0.5);
+  border-radius: 2px;
+  padding: 10px 14px;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 15px; font-weight: 300;
+  color: rgba(255,251,240,.6);
+  outline: none;
+  transition: border-color .2s;
+  width: 100%;
+}
+.field-input::placeholder { color: rgba(255,251,240,.15); }
+.field-input:focus { border-color: var(--s2); }
+.field-textarea {
+  resize: none; min-height: 80px; line-height: 1.5;
+}
+.form-actions {
+  display: flex; align-items: center; justify-content: flex-end; gap: 16px;
+  margin-top: 20px;
+}
+.btn-ghost {
+  font-family: "DM Mono", monospace;
+  font-size: 8px; letter-spacing: .3em; text-transform: uppercase;
+  color: var(--amber-deep); opacity: .4; cursor: pointer;
+  background: none; border: none;
+}
+.btn-save {
+  display: flex; align-items: center; gap: 8px;
+  border: 0.5px solid var(--s2);
+  background: rgba(45,212,191,0.07);
+  padding: 10px 24px; border-radius: 2px; cursor: pointer;
+  transition: background .2s;
+}
+.btn-save:hover { background: rgba(45,212,191,0.14); }
+.btn-save span {
+  font-family: "DM Mono", monospace;
+  font-size: 9px; letter-spacing: .3em; text-transform: uppercase;
+  background: linear-gradient(160deg, #5EEADC, var(--s1));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+
+/* ── FOOTER ── */
+footer {
+  border-top: 0.5px solid rgba(138,86,0,0.12);
+  padding: 32px 40px;
+  display: flex; align-items: center; justify-content: space-between;
+  max-width: 1100px; margin: 0 auto; width: 100%;
+}
+.footer-golden {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 300; font-size: 12px; letter-spacing: .2em;
+  background: linear-gradient(170deg, #FFFBF0, #F4A623, #C47D0E);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.footer-copy {
+  font-family: "DM Mono", monospace;
+  font-size: 8px; letter-spacing: .25em;
+  color: var(--amber-deep); opacity: .25;
+}
+
+/* ── Animations ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.hero-wordmark { animation: fadeUp .8s ease both; }
+.hero-desc     { animation: fadeUp .8s .15s ease both; }
+.stats         { animation: fadeUp .8s .3s ease both; }
+.section       { animation: fadeUp .8s .4s ease both; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">
+    <span class="nav-logo-golden">Golden</span>
+    <div class="nav-sep"></div>
+    <span class="nav-logo-spark">VaultHQ</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#">My Website</a></li>
+    <li><a href="#">My Project</a></li>
+    <li><a href="#">My Kitchen</a></li>
+    <li><a href="#">My Renovation</a></li>
+    <li><a href="#">My Games</a></li>
+    <li><a href="#">New Idea</a></li>
+  </ul>
+  <button class="nav-add">
+    <div class="nav-add-dot"></div>
+    <span>Nouvelle entrée</span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <span class="hero-eyebrow">Golden · VaultHQ</span>
+  <div class="hero-wordmark">
+    <div class="orn"><div class="ol"></div><div class="og"></div><div class="ol"></div></div>
+    <div class="hero-title-row">
+      <span class="hero-title">Vault</span>
+      <div class="hero-divider"></div>
+      <span class="hero-hq">HQ</span>
+    </div>
+    <span class="hero-sub">My ideas, my vault.</span>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <span class="stat-n">12</span>
+      <span class="stat-l">Idées</span>
+    </div>
+    <div class="stat">
+      <span class="stat-n">4</span>
+      <span class="stat-l">En cours</span>
+    </div>
+    <div class="stat">
+      <span class="stat-n">3</span>
+      <span class="stat-l">Lancées</span>
+    </div>
+    <div class="stat">
+      <span class="stat-n">Mai</span>
+      <span class="stat-l">Ce mois</span>
+    </div>
+  </div>
+</div>
+
+<!-- IDEAS GRID -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-label">
+      <div class="ol"></div>
+      <div class="og"></div>
+      <span class="section-title">Idées récentes</span>
+    </div>
+    <span class="section-count">12 entrées</span>
+  </div>
+
+  <div class="ideas-grid">
+
+    <!-- Featured Card -->
+    <div class="card featured">
+      <div class="card-status">
+        <div class="pip"></div>
+        <span class="status-label">Actif</span>
+      </div>
+      <div class="card-orn">
+        <div class="mo"></div><div class="mg"></div><div class="mo"></div>
+      </div>
+      <span class="card-cat">Plateforme web</span>
+      <div class="card-name">Dashboard unifié Golden</div>
+      <div class="card-desc">Un hub central qui rassemble tous les HQ en un seul endroit — navigation, notifications et météo de chaque site en temps réel.</div>
+      <div class="card-footer">
+        <span class="card-date">12 mai 2026</span>
+        <div class="card-tags"><span class="tag">Firebase</span><span class="tag">Dashboard</span></div>
+      </div>
+    </div>
+
+    <!-- Spark Card (tall) -->
+    <div class="card spark">
+      <div class="card-status">
+        <div class="pip dim"></div>
+        <span class="status-label dim">Réflexion</span>
+      </div>
+      <div class="card-orn">
+        <div class="mo"></div><div class="mg"></div><div class="mo"></div>
+      </div>
+      <span class="card-cat">Santé</span>
+      <div class="card-name">ChimioHQ · Journal de traitement</div>
+      <div class="card-desc">Un journal structuré qui suit les cycles, les effets secondaires et l'humeur. Simple, doux, et pensé pour les mauvais jours.</div>
+      <div class="card-footer">
+        <span class="card-date">8 mai 2026</span>
+        <div class="card-tags"><span class="tag">Journal</span></div>
+      </div>
+    </div>
+
+    <!-- Normal cards -->
+    <div class="card">
+      <div class="card-status">
+        <div class="pip done"></div>
+        <span class="status-label done">Lancé</span>
+      </div>
+      <div class="card-orn">
+        <div class="mo"></div><div class="mg"></div><div class="mo"></div>
+      </div>
+      <span class="card-cat">Cuisine</span>
+      <div class="card-name">KitchenHQ · Mode hors ligne</div>
+      <div class="card-desc">Accéder aux recettes même sans connexion.</div>
+      <div class="card-footer">
+        <span class="card-date">1 mai 2026</span>
+        <div class="card-tags"><span class="tag">PWA</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-status">
+        <div class="pip"></div>
+        <span class="status-label">Actif</span>
+      </div>
+      <div class="card-orn">
+        <div class="mo"></div><div class="mg"></div><div class="mo"></div>
+      </div>
+      <span class="card-cat">Maison</span>
+      <div class="card-name">HouseHQ · Mode saisonnier</div>
+      <div class="card-desc">Tâches ménagères adaptées automatiquement selon la saison.</div>
+      <div class="card-footer">
+        <span class="card-date">15 mai 2026</span>
+        <div class="card-tags"><span class="tag">Auto</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-status">
+        <div class="pip dim"></div>
+        <span class="status-label dim">Réflexion</span>
+      </div>
+      <div class="card-orn">
+        <div class="mo"></div><div class="mg"></div><div class="mo"></div>
+      </div>
+      <span class="card-cat">Plantes</span>
+      <div class="card-name">PlantHQ · Rappels arrosage</div>
+      <div class="card-desc">Notification douce pour chaque plante, selon ses besoins réels.</div>
+      <div class="card-footer">
+        <span class="card-date">10 mai 2026</span>
+        <div class="card-tags"><span class="tag">Notifs</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-status">
+        <div class="pip dim"></div>
+        <span class="status-label dim">Réflexion</span>
+      </div>
+      <div class="card-orn">
+        <div class="mo"></div><div class="mg"></div><div class="mo"></div>
+      </div>
+      <span class="card-cat">Vie</span>
+      <div class="card-name">MyLifeHQ · Ligne du temps</div>
+      <div class="card-desc">Visualiser sa vie comme une fresque chronologique.</div>
+      <div class="card-footer">
+        <span class="card-date">3 mai 2026</span>
+        <div class="card-tags"><span class="tag">Timeline</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ADD PANEL (form mockup) -->
+  <div class="add-panel">
+    <div class="add-panel-header">
+      <div class="orn" style="gap:10px;">
+        <div class="ol" style="width:24px;"></div>
+        <div class="og" style="width:5px;height:5px;"></div>
+      </div>
+      <span class="add-panel-title">Nouvelle entrée</span>
+    </div>
+    <div class="form-grid">
+      <div class="form-field">
+        <span class="field-label">Nom de l'idée</span>
+        <input class="field-input" type="text" placeholder="ex. PlantHQ · Mode hiver">
+      </div>
+      <div class="form-field">
+        <span class="field-label">Catégorie</span>
+        <input class="field-input" type="text" placeholder="Cuisine, Maison, Santé…">
+      </div>
+      <div class="form-field full">
+        <span class="field-label">Description</span>
+        <textarea class="field-input field-textarea" placeholder="Décris l'idée en quelques phrases…"></textarea>
+      </div>
+      <div class="form-field">
+        <span class="field-label">Statut</span>
+        <input class="field-input" type="text" placeholder="Réflexion · Actif · Lancé">
+      </div>
+      <div class="form-field">
+        <span class="field-label">Tags</span>
+        <input class="field-input" type="text" placeholder="Firebase, UI, Auto…">
+      </div>
+    </div>
+    <div class="form-actions">
+      <button class="btn-ghost">Annuler</button>
+      <button class="btn-save">
+        <div class="nav-add-dot"></div>
+        <span>Verrouiller l'idée</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span class="footer-golden">Golden · VaultHQ</span>
+  <span class="footer-copy">My ideas, my vault · 2026</span>
+</footer>
+
+</body>
+</html>
