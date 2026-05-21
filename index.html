@@ -400,7 +400,7 @@ footer { border-top:0.5px solid rgba(158,173,178,0.08); padding:32px 40px; displ
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult, signOut, onAuthStateChanged }
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { getFirestore, collection, addDoc, deleteDoc, doc,
   onSnapshot, query, orderBy, serverTimestamp }
@@ -438,21 +438,13 @@ const statMonth    = document.getElementById("stat-month");
 
 // AUTH
 const provider = new GoogleAuthProvider();
-const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
 document.getElementById("btn-google").addEventListener("click", async () => {
   try {
-    if (isMobile) {
-      await signInWithRedirect(auth, provider);
-    } else {
-      await signInWithPopup(auth, provider);
-    }
+    await signInWithPopup(auth, provider);
   } catch(e) { showToast("Erreur connexion"); }
 });
 document.getElementById("btn-logout").addEventListener("click", () => signOut(auth));
-
-// Résultat après redirect mobile
-getRedirectResult(auth).catch(() => {});
 
 onAuthStateChanged(auth, user => {
   if (user) {
