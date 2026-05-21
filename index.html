@@ -223,6 +223,38 @@ footer { border-top:0.5px solid rgba(158,173,178,0.08); padding:32px 40px; displ
 .hero-wordmark { animation:fadeUp .8s ease both; }
 .stats         { animation:fadeUp .8s .3s ease both; }
 .section       { animation:fadeUp .8s .4s ease both; }
+
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+  nav { padding:14px 20px; gap:10px; }
+  .nav-links { display:none; }
+  #btn-logout { display:none; }
+  .nav-add span { display:none; }
+  .nav-add { padding:8px 12px; }
+
+  .hero { padding:100px 20px 60px; gap:32px; }
+  .hero-title { font-size:48px; }
+  .hero-hq    { font-size:48px; }
+  .hero-divider { height:32px; }
+  .login-title { font-size:44px; }
+  .login-hq    { font-size:44px; }
+  .login-divider { height:28px; }
+
+  .stats { width:100%; }
+  .stat  { padding:12px 14px; flex:1; }
+  .stat-n { font-size:22px; }
+  .stat-l { font-size:7px; letter-spacing:.18em; }
+
+  .section { padding:0 16px 60px; }
+  .ideas-grid { grid-template-columns:1fr; }
+  .cards-empty { grid-column:span 1; }
+
+  .form-grid { grid-template-columns:1fr; }
+  .form-field.full { grid-column:span 1; }
+  .add-panel { padding:20px 16px; }
+
+  footer { padding:20px 16px; flex-direction:column; gap:8px; }
+}
 </style>
 </head>
 <body>
