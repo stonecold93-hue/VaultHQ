@@ -55,7 +55,20 @@ body { background:var(--bg); font-family:"Cormorant Garamond",serif; margin:0; p
 #btn-google span { font-family:"DM Mono",monospace; font-size:9px; letter-spacing:.3em; text-transform:uppercase; color:var(--silver); }
 
 /* ── APP ── */
-#app { display:block; }
+#app { display:none; }
+
+/* ── LOADING ── */
+#loading {
+  position:fixed; inset:0; z-index:998;
+  background:var(--bg);
+  display:flex; align-items:center; justify-content:center;
+}
+#loading span {
+  font-family:"DM Mono",monospace; font-size:9px; letter-spacing:.4em;
+  text-transform:uppercase; color:var(--v1); opacity:.5;
+  animation:pulse 1.5s ease infinite;
+}
+@keyframes pulse { 0%,100%{opacity:.3;} 50%{opacity:.7;} }
 
 /* ── NAV ── */
 nav {
@@ -259,6 +272,9 @@ footer { border-top:0.5px solid rgba(158,173,178,0.08); padding:32px 40px; displ
 </head>
 <body>
 
+<!-- LOADING -->
+<div id="loading"><span>VaultHQ…</span></div>
+
 <!-- LOGIN -->
 <div id="login-screen">
   <div class="login-wm">
@@ -447,6 +463,7 @@ document.getElementById("btn-google").addEventListener("click", async () => {
 document.getElementById("btn-logout").addEventListener("click", () => signOut(auth));
 
 onAuthStateChanged(auth, user => {
+  document.getElementById("loading").style.display = "none";
   if (user) {
     currentUser = user;
     loginScreen.style.display = "none";
