@@ -243,8 +243,8 @@ footer { border-top:0.5px solid rgba(158,173,178,0.08); padding:32px 40px; displ
   nav { padding:14px 20px; gap:10px; }
   .nav-links { display:none; }
   #btn-logout { display:none; }
-  .nav-add span { display:none; }
-  .nav-add { padding:8px 12px; }
+  .nav-add { padding:10px 16px; }
+  .nav-add span { font-size:9px; }
 
   .hero { padding:100px 20px 60px; gap:32px; }
   .hero-title { font-size:48px; }
@@ -259,7 +259,7 @@ footer { border-top:0.5px solid rgba(158,173,178,0.08); padding:32px 40px; displ
   .stat-n { font-size:22px; }
   .stat-l { font-size:7px; letter-spacing:.18em; }
 
-  .section { padding:0 16px 60px; }
+  .section { padding:0 16px 120px; }
   .ideas-grid { grid-template-columns:1fr; }
   .cards-empty { grid-column:span 1; }
 
@@ -267,8 +267,43 @@ footer { border-top:0.5px solid rgba(158,173,178,0.08); padding:32px 40px; displ
   .form-field.full { grid-column:span 1; }
   .add-panel { padding:20px 16px; }
 
-  footer { padding:20px 16px; flex-direction:column; gap:8px; }
+  footer { display:none; }
+
+  /* bottom nav mobile */
+  .mobile-nav { display:flex !important; }
+  .toast { bottom:90px; }
 }
+
+/* ── BOTTOM NAV MOBILE ── */
+.mobile-nav {
+  display:none;
+  position:fixed; bottom:0; left:0; right:0; z-index:200;
+  background:rgba(1,16,14,0.97);
+  border-top:0.5px solid var(--v-border);
+  backdrop-filter:blur(8px);
+  overflow-x:auto;
+  padding:0 8px;
+  gap:2px;
+}
+.mobile-nav a {
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  padding:12px 10px 14px;
+  font-family:"DM Mono",monospace; font-size:7px; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--silver-dim); text-decoration:none; white-space:nowrap;
+  border-top:2px solid transparent;
+  transition:color .2s, border-color .2s;
+  flex-shrink:0;
+}
+.mobile-nav a.active { color:var(--v1); border-top-color:var(--v1); }
+.mobile-nav a:hover  { color:var(--v1); }
+.mobile-nav-add {
+  display:flex; align-items:center; justify-content:center;
+  padding:10px 16px 14px;
+  font-family:"DM Mono",monospace; font-size:7px; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--silver); background:none; border:none; border-top:2px solid transparent;
+  cursor:pointer; flex-shrink:0; white-space:nowrap;
+}
+.mobile-nav-dot { width:5px; height:5px; background:var(--v1); transform:rotate(45deg); margin-right:6px; flex-shrink:0; }
 </style>
 </head>
 <body>
@@ -411,6 +446,21 @@ footer { border-top:0.5px solid rgba(158,173,178,0.08); padding:32px 40px; displ
     <span class="footer-golden">Golden · VaultHQ</span>
     <span class="footer-copy">My ideas, my vault · 2026</span>
   </footer>
+
+  <!-- MOBILE BOTTOM NAV -->
+  <nav class="mobile-nav" id="mobile-nav">
+    <a href="#" class="active" data-cat="all">All</a>
+    <a href="#" data-cat="My Website">Website</a>
+    <a href="#" data-cat="My Project">Project</a>
+    <a href="#" data-cat="My Kitchen">Kitchen</a>
+    <a href="#" data-cat="My Renovation">Renov.</a>
+    <a href="#" data-cat="My Games">Games</a>
+    <a href="#" data-cat="New Idea">New Idea</a>
+    <button class="mobile-nav-add" id="mobile-btn-add">
+      <div class="mobile-nav-dot"></div>
+      Nouvelle entrée
+    </button>
+  </nav>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -552,16 +602,21 @@ function renderAll() {
   });
 }
 
-// FILTRES
-document.querySelectorAll(".nav-links a").forEach(a => {
-  a.addEventListener("click", e => {
-    e.preventDefault();
-    document.querySelectorAll(".nav-links a").forEach(x => x.classList.remove("active"));
-    a.classList.add("active");
-    activeFilter = a.dataset.cat;
-    renderAll();
+// FILTRES — sync desktop + mobile
+function setFilter(cat) {
+  activeFilter = cat;
+  document.querySelectorAll(".nav-links a, .mobile-nav a").forEach(x => {
+    x.classList.toggle("active", x.dataset.cat === cat);
   });
+  renderCards();
+}
+document.querySelectorAll(".nav-links a").forEach(a => {
+  a.addEventListener("click", e => { e.preventDefault(); setFilter(a.dataset.cat); });
 });
+document.querySelectorAll(".mobile-nav a").forEach(a => {
+  a.addEventListener("click", e => { e.preventDefault(); setFilter(a.dataset.cat); });
+});
+document.getElementById("mobile-btn-add").addEventListener("click", () => addPanel.classList.toggle("open"));
 
 // FORMULAIRE
 document.getElementById("btn-toggle-form").addEventListener("click", () => addPanel.classList.toggle("open"));
